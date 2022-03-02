@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 public class Client {
@@ -11,12 +14,18 @@ public class Client {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
+	@NotBlank
 	private String name;
+	@NotBlank
 	private String country;
+	@NotBlank
 	private String city;
+	@NotBlank
 	private String streetName;
-	private Number streetNumber;
-	private Number zip;
+	@Min(1)
+	private Number streetNumber = 0;
+	@Min(1)
+	private Number zip = 0;
 	
 	public String getName() {
 		return name;
