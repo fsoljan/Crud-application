@@ -1,38 +1,19 @@
-package com.crud.api.entity;
+package com.crud.api.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import com.crud.api.entity.Client;
 
-import com.crud.api.model.ClientDto;
-
-@Entity
-@NamedQuery(name = "Project.findByName", query = "SELECT c FROM Client c WHERE c.name = ?1")
-public class Client {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class ClientDto {
 	private Integer id;
-	@NotBlank
 	private String name;
-	@NotBlank
 	private String country;
-	@NotBlank
 	private String city;
-	@NotBlank
 	private String streetName;
-	@Min(1)
-	private Number streetNumber = 0;
-	@Min(1)
-	private Number zip = 0;
+	private Number streetNumber;
+	private Number zip;
+	
+	public ClientDto() { }
 
-	public Client() { }
-
-	public Client(ClientDto c) { 
+	public ClientDto(Client c) { 
 		id = c.getId();
 		name = c.getName();
 		country = c.getCountry();
@@ -44,9 +25,6 @@ public class Client {
 	
 	public Integer getId() {
 		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -84,8 +62,7 @@ public class Client {
 	public void setZip(Number zip) {
 		this.zip = zip;
 	}
-	
-	public ClientDto convertToDto() {
-		return new ClientDto(this);
+	public Client convertToEntity() {
+		return new Client(this);
 	}
 }

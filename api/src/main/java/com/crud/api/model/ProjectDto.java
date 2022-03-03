@@ -1,34 +1,19 @@
-package com.crud.api.entity;
+package com.crud.api.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
+import com.crud.api.entity.Project;
 
-import com.crud.api.model.ProjectDto;
-
-@Entity
-public class Project {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+public class ProjectDto {
 	private Integer id;
-	@NotBlank
 	private String name;
-	@Min(0)
-	private Integer clientId = -1;
-	@NotBlank
+	private String clientName;
 	private String projectManager;
 	private String contactEmail;
 	private Number contactNumber;
-	@Min(1)
-	private Number billingAddress = -1;
+	private Number billingAddress;
+
+	public ProjectDto() { }
 	
-	public Project() { }
-	
-	public Project(ProjectDto p) {
+	public ProjectDto(Project p) {
 		this.id = p.getId();
 		this.name = p.getName();
 		this.projectManager = p.getProjectManager();
@@ -49,11 +34,11 @@ public class Project {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Integer getClientId() {
-		return clientId;
+	public String getClientName() {
+		return clientName;
 	}
-	public void setClientId(Integer clientId) {
-		this.clientId = clientId;
+	public void setClientName(String clientName) {
+		this.clientName = clientName;
 	}
 	public String getProjectManager() {
 		return projectManager;
@@ -79,7 +64,7 @@ public class Project {
 	public void setBillingAddress(Number billingAddress) {
 		this.billingAddress = billingAddress;
 	}
-	public ProjectDto convertToDto() {
-		return new ProjectDto(this);
+	public Project convertToEntity() {
+		return new Project(this);
 	}
 }
