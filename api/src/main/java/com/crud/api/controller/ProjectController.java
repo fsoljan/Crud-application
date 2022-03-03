@@ -1,6 +1,7 @@
 package com.crud.api.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,13 @@ public class ProjectController {
 	private ClientRepository clientRepository;
 
 	@GetMapping
-	public List<Project> getAll() {
-		return projectRepository.findAll();
+	public List<ProjectDto> getAll() {
+		return projectRepository.findAll().stream().map(p -> p.convertToDto()).collect(Collectors.toList());
 	}
 	
 	@GetMapping(path="/{id}")
-	public Project get(@PathVariable("id") Integer projectId) {
-		return projectRepository.findById(projectId).get();
+	public ProjectDto get(@PathVariable("id") Integer projectId) {
+		return projectRepository.findById(projectId).get().convertToDto();
 	}
 
 	@PostMapping
@@ -45,7 +46,7 @@ public class ProjectController {
 	}
 
 	@PatchMapping(path="/{id}")
-	public ProjectDto update (@RequestBody ProjectDto projectDto, @PathVariable("id") Integer projectId) {
+	public ProjectDto update (@PathVariable("id") Integer projectId, @RequestBody ProjectDto projectDto) {
 		Project p = projectRepository.findById(projectId).get();
 		
 		p.setName(projectDto.getName());
